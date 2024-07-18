@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col
+import requests
 
 # Write directly to the app
 st.title("Customize your Smoothie")
@@ -29,9 +30,11 @@ if ingredients_list:
     ingredients = ''
 
     for x in ingredients_list:
+        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+        fv_df= st.dataframe(data=fruityvice_response.json(), use_container_width=True)
         ingredients +=x +' ' 
 
-    st.write(ingredients)
+    #st.write(ingredients)
 
     but = st.button('Submit')
 
@@ -47,6 +50,4 @@ if ingredients_list:
             
 
 
-import requests
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-st.text(fruityvice_response)
+
