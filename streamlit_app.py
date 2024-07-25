@@ -5,16 +5,12 @@ import requests
 
 # Write directly to the app
 st.title("Customize your Smoothie")
-st.write(
-    """Replace this example with your own code!
-    **And if you're new to Streamlit,** check
-    out our easy-to-follow guides at
-    [docs.streamlit.io](https://docs.streamlit.io).
-    """
-)
+st.write("Please enter your name below")
 
-title = st.text_input("Smoothie name")
+title = st.text_input("Name")
 st.write("Name : ", title)
+
+
 
 cnx = st.connection("snowflake")
 session = cnx.session()
@@ -24,6 +20,7 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 
 pd_df = my_dataframe.to_pandas()                                                                      
 
+st.write("Customize your smoothie by selecting fruits from below options")
 ingredients_list =st.multiselect('Choose upto 5', my_dataframe, max_selections = 5)
 
 if ingredients_list:
